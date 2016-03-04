@@ -41,6 +41,9 @@ BEGIN
 		end if;
 	end process;
 
-	nextcnt   <= counter_r + 1 when cnt_en_i = '1' else counter_r;
-	one_sec_o <= '1' when counter_r = max_cnt else '0';
+	nextcnt   <= (others => '0') when counter_r = max_cnt - 1 and cnt_en_i = '1' else
+	             counter_r + 1 when cnt_en_i = '1' else
+	             counter_r;
+	one_sec_o <= '1' when counter_r = max_cnt - 1 else
+	             '0';
 END rtl;
