@@ -106,7 +106,7 @@ BEGIN
 
 clk_gen_i:clk_gen             PORT MAP(
                                        clkin_i     => FPGA_CLK        ,
-                                       rst_i       => not FPGA_RESET  ,
+                                       rst_i       => FPGA_RESET  ,
                                        clk_50MHz_o => clk_50MHz_s     ,
                                        clk_27MHz_o => clk_27MHz_s     ,
                                        reset_o     => rst_locked_s

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2016-02-29T17:22:24</DateModified>
+  <DateModified>2016-03-07T17:12:26</DateModified>
   <ModuleName>top</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
   <SavedFilePath>C:/materija/RA151-2013/lab1/iseconfig/top.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/materija/RA151-2013/lab1</ImplementationReportsDirectory>
+  <ImplementationReportsDirectory>C:/materija/RA151-2013/lab1\</ImplementationReportsDirectory>
   <DateInitialized>2016-02-29T17:22:24</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

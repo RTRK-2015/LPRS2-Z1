@@ -44,9 +44,9 @@ BEGIN
 		end if;
 	end process;
 	
-	next_state <= IDLE when reset_switch_i = '0' else
-	              COUNT when (current_state = IDLE and start_switch_i = '0') or (current_state = STOP and continue_switch_i = '0') else
-					  STOP  when current_state = COUNT and stop_switch_i = '0' else
+	next_state <= IDLE when reset_switch_i = '1' else
+	              COUNT when (current_state = IDLE and start_switch_i = '1') or (current_state = STOP and continue_switch_i = '1') else
+					  STOP  when current_state = COUNT and stop_switch_i = '1' else
 					  current_state;
 	
 	cnt_en_o <= '1' when current_state = COUNT else '0';

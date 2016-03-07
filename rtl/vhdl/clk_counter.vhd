@@ -27,23 +27,39 @@ ENTITY clk_counter IS GENERIC(
                              );
 END clk_counter;
 
+
 ARCHITECTURE rtl OF clk_counter IS
+
+component reg is
+	generic(
+		WIDTH    : positive := 1;
+		RST_INIT : integer := 0
+	);
+	port(
+		i_clk  : in  std_logic;
+		in_rst : in  std_logic;
+		i_d    : in  std_logic_vector(WIDTH-1 downto 0);
+		o_q    : out std_logic_vector(WIDTH-1 downto 0)
+	);
+end component reg;
 
 SIGNAL   counter_r : STD_LOGIC_VECTOR(25 DOWNTO 0);
 SIGNAL   nextcnt   : STD_LOGIC_VECTOR(25 DOWNTO 0);
 
 BEGIN
-	process (clk_i, rst_i) begin
-		if rst_i = '0' then
-			counter_r <= (others => '0');
-		elsif rising_edge(clk_i) then
-			counter_t <= nextcnt;
-		end if;
-	end process;
-
-	nextcnt   <= (others => '0') when counter_r = max_cnt - 1 and cnt_en_i = '1' else
-	             counter_r + 1 when cnt_en_i = '1' else
-	             counter_r;
+	r : reg
+	generic map(
+		WIDTH => 26)
+	port map(
+		i_clk => clk_i,
+		in_rst => rst_i,
+		i_d => nextcnt,
+		o_q => counter_r
+	);
+	
+	nextcnt <= (others => '0') when counter_r = max_cnt - 1 and cnt_en_i = '1' else
+	           counter_r + 1   when cnt_en_i = '1' else
+				  counter_r;
 	one_sec_o <= '1' when counter_r = max_cnt - 1 else
 	             '0';
 END rtl;
