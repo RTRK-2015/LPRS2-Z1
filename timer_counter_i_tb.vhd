@@ -2,10 +2,10 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   17:19:56 03/03/2016
+-- Create Date:   17:58:55 03/07/2016
 -- Design Name:   
--- Module Name:   C:/materija/RA151-2013/lab1/timer_counter_i_tb.vhd
--- Project Name:  lab1
+-- Module Name:   C:/materija/RA113-2013/sarma/timer_counter_i_tb.vhd
+-- Project Name:  sarma
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
@@ -92,20 +92,29 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-		rst_i <= '1';
-		cnt_rst_i <= '1';
-		
-		cnt_en_i <= '1';
-		one_sec_i <= '1';
-		wait for 30 ns;
-		one_sec_i <= '0';
-		wait for 50 ns;
-		one_sec_i <= '1';
-		cnt_en_i <= '0';
-		wait for 50 ns;
-		cnt_en_i <= '1';
+      wait for clk_i_period*10;
 
       -- insert stimulus here 
+	  
+	  rst_i <= '1';
+	  cnt_rst_i <= '0';
+	  
+	  cnt_en_i <= '1';
+	  one_sec_i <= '1';
+	  
+	  wait for 50 ns;
+	  
+	  one_sec_i <= '0';
+	  
+	  wait for 50 ns;
+	  
+	  one_sec_i <= '1';
+	  cnt_en_i <= '0';
+	  
+	  wait for 50 ns;
+	  
+	  cnt_en_i <= '1';
+	  
 
       wait;
    end process;

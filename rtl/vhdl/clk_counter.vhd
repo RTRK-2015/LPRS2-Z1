@@ -27,8 +27,15 @@ ENTITY clk_counter IS GENERIC(
                              );
 END clk_counter;
 
-
 ARCHITECTURE rtl OF clk_counter IS
+
+SIGNAL   counter_r : STD_LOGIC_VECTOR(25 DOWNTO 0);
+signal	 c_i : STD_LOGIC_VECTOR (25 downto 0);
+signal	 c_tc : STD_LOGIC;
+signal	 c_m : STD_LOGIC_VECTOR(25 downto 0);
+signal	 c_en : STD_LOGIC_VECTOR(25 downto 0);
+signal	 c_rst : STD_LOGIC_VECTOR(25 downto 0);
+
 
 component reg is
 	generic(
@@ -43,23 +50,37 @@ component reg is
 	);
 end component reg;
 
-SIGNAL   counter_r : STD_LOGIC_VECTOR(25 DOWNTO 0);
-SIGNAL   nextcnt   : STD_LOGIC_VECTOR(25 DOWNTO 0);
-
 BEGIN
-	r : reg
+
+-- DODATI:
+-- brojac koji kada izbroji dovoljan broj taktova generise SIGNAL one_sec_o koji
+-- predstavlja jednu proteklu sekundu, brojac se nulira nakon toga
+
+	cnt_reg: reg
 	generic map(
-		WIDTH => 26)
+			WIDTH => 26
+	)
 	port map(
 		i_clk => clk_i,
 		in_rst => rst_i,
-		i_d => nextcnt,
+		i_d => c_rst,
 		o_q => counter_r
 	);
 	
-	nextcnt <= (others => '0') when counter_r = max_cnt - 1 and cnt_en_i = '1' else
-	           counter_r + 1   when cnt_en_i = '1' else
-				  counter_r;
-	one_sec_o <= '1' when counter_r = max_cnt - 1 else
-	             '0';
+	c_i <= counter_r + 1;
+	
+	c_tc <= '1' when counter_r = max_cnt - 1 else '0';
+	
+	c_m <= (others => '0') when c_tc = '1' else
+			c_i;
+		
+	c_en <= counter_r when cnt_en_i = '0' else
+			c_m;
+			
+	c_rst <= (others => '0') when cnt_rst_i = '1' else
+			c_en;
+
+	one_sec_o <= '1' when counter_r = max_cnt - 1 else '0';
+
+
 END rtl;
